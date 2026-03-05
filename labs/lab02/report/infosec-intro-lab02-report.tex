@@ -1,0 +1,656 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  12pt,
+  a4paper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+
+\usepackage{amsmath,amssymb}
+\usepackage{setspace}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{indentfirst}
+\usepackage{float}
+\floatplacement{figure}{H}
+\IfFileExists{plex-otf.sty}{
+  %% Full TeXlive
+  \usepackage[
+    % math,
+    RM={Scale=0.94},SS={Scale=0.94},SScon={Scale=0.94},TT={Scale=MatchLowercase,FakeStretch=0.9},
+    DefaultFeatures={Ligatures=Common}
+  ]{plex-otf}
+  % \usepackage[Scale=MatchUppercase]{juliamono}
+}{
+  %% TinyTeX
+  \usepackage{libertine}
+}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Содержание}
+\else
+  \newcommand\contentsname{Содержание}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Список иллюстраций}
+\else
+  \newcommand\listfigurename{Список иллюстраций}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Список таблиц}
+\else
+  \newcommand\listtablename{Список таблиц}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Рисунок}
+\else
+  \newcommand\figurename{Рисунок}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Таблица}
+\else
+  \newcommand\tablename{Таблица}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Список}
+\newcommand*\listoflistings{\listof{codelisting}{Листинги}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{russian}
+\babelprovide[import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[style=gost-numeric,backend=biber,langhook=extras,autolang=other*]{biblatex}
+\addbibresource{bib/cite.bib}
+\usepackage{csquotes}
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Дискреционное разграничение прав в Linux},
+  pdfauthor={Симонова Полина Игоревна (да, именно симонова)},
+  pdflang={ru-RU},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Дискреционное разграничение прав в Linux}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Основные атрибуты}
+\author{Симонова Полина Игоревна (да, именно симонова)}
+\date{}
+
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Содержание}
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\listoffigures
+\listoftables
+
+\setstretch{1.5}
+\chapter{Цель
+работы}\label{ux446ux435ux43bux44c-ux440ux430ux431ux43eux442ux44b}
+
+Получение практических навыков работы в консоли с атрибутами файлов,
+закрепление теоретических основ дискреционного разграничения доступа в
+современных системах с открытым кодом на базе ОС Linux
+
+\chapter{Задание}\label{ux437ux430ux434ux430ux43dux438ux435}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Работа с атрибутами файлов
+\item
+  Заполнение таблицы \enquote{Установленные права и разрешённые
+  действия} (см. табл. 2.1)
+\item
+  Заполнение таблицы \enquote{Минимальные права для совершения операций}
+  (см. табл. 2.2)
+\end{enumerate}
+
+\chapter{Теоретическое
+введение}\label{ux442ux435ux43eux440ux435ux442ux438ux447ux435ux441ux43aux43eux435-ux432ux432ux435ux434ux435ux43dux438ux435}
+
+\textbf{Операционная система} --- это комплекс программ, предназначенных
+для управления ресурсами компьютера и организации взаимодействия с
+пользователем.
+
+\textbf{Права доступа} определяют, какие действия конкретный
+пользователь может или не может совершать с определенным файлами и
+каталогами. С помощью разрешений можно создать надежную среду --- такую,
+в которой никто не может поменять содержимое ваших документов или
+повредить системные файлы.
+
+\chapter{Выполнение лабораторной
+работы}\label{ux432ux44bux43fux43eux43bux43dux435ux43dux438ux435-ux43bux430ux431ux43eux440ux430ux442ux43eux440ux43dux43eux439-ux440ux430ux431ux43eux442ux44b}
+
+\section{Атрибуты
+файлов}\label{ux430ux442ux440ux438ux431ux443ux442ux44b-ux444ux430ux439ux43bux43eux432}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  В операционной системе Rocky создаю нового пользователя guest через
+  учетную запись администратора (рис. 1).
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/1.PNG}
+
+}
+
+\caption{Добавление пользователя}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Далее задаю пароль для созданной учетной записи (рис. 2).
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/2.PNG}
+
+}
+
+\caption{Добавление пароля для пользователя}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Сменяю пользователя в системе на только что созданного пользователя
+  guest (рис. 3).
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/3.PNG}
+
+}
+
+\caption{Вход через аккаунт пользователя}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Определяю с помощью команды pwd, что я нахожусь в директории
+  /home/guest/. Эта директория является домашней, ведь в приглашении
+  командой строкой стоит значок \textasciitilde, указывающий, что я в
+  домашней директории (рис. 4).
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/4.PNG}
+
+}
+
+\caption{Текущая директория}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Уточняю имя пользователя (рис. 5)
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/5.PNG}
+
+}
+
+\caption{Информация об имени пользователе}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  В выводе команды groups информация только о названии группы, к которой
+  относится пользователь. В выводе команды id можно найти больше
+  информации: имя пользователя и имя группы, также коды имени
+  пользователя и группы (рис. 6)
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/6.PNG}
+
+}
+
+\caption{Информация о пользователе}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Имя пользователя в приглашении командной строкой совпадает с именем
+  пользователя, которое выводит команда whoami (рис. 7)
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/7.PNG}
+
+}
+
+\caption{Сравнение информации об имени пользователя}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Получаю информацию о пользователе с помощью команды
+\end{enumerate}
+
+\begin{verbatim}
+cat /etc/passwd | grep guest
+\end{verbatim}
+
+В выводе получаю коды пользователя и группы, адрес домашней директории
+(рис. 8).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/8.PNG}
+
+}
+
+\caption{Просмотр файла passwd}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{8}
+\tightlist
+\item
+  Список поддиректорий директории home получилось получить с помощью
+  команды ls -l, если мы добавим опцию -a, то сможем увидеть еще и
+  директорию пользователя root. Права у директории:
+\end{enumerate}
+
+root: drwxr-xr-x,
+
+pisimonova и guest: drwx------ (рис. 9).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/9.PNG}
+
+}
+
+\caption{Просмотр содержимого директории}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{9}
+\tightlist
+\item
+  Пыталась проверить расширенные атрибуты директорий. Нет, их увидеть не
+  удалось (рис. 10). Увидеть расширенные атрибуты других пользователей,
+  тоже не удалось, для них даже вывода списка директорий не было.
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/10.PNG}
+
+}
+
+\caption{Проверка расширенных атрибутов}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{10}
+\tightlist
+\item
+  Создаю поддиректорию dir1 для домашней директории. Расширенные
+  атрибуты командой lsattr просмотреть у директории не удается, но
+  атрибуты есть: drwxr-xr-x, их удалось просмотреть с помощью команды ls
+  -l (рис. 11).
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/11.PNG}
+
+}
+
+\caption{Создание поддиректории}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{11}
+\tightlist
+\item
+  Снимаю атрибуты командой chmod 000 dir1, при проверке с помощью
+  команды ls -l видно, что теперь атрибуты действительно сняты (рис.
+  12).
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/12.PNG}
+
+}
+
+\caption{Снятие атрибутов с директории}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{12}
+\tightlist
+\item
+  Попытка создать файл в директории dir1. Выдает ошибку:
+  \enquote{Отказано в доступе} (рис. 13).
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/13.PNG}
+
+}
+
+\caption{Попытка создания файла}
+
+\end{figure}%
+
+Вернув права директории и использовав снова командy ls -l можно
+убедиться, что файл не был создан (рис. 14).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/14.PNG}
+
+}
+
+\caption{Проверка содержимого директории}
+
+\end{figure}%
+
+\section{Заполнение таблицы
+2.1}\label{ux437ux430ux43fux43eux43bux43dux435ux43dux438ux435-ux442ux430ux431ux43bux438ux446ux44b-2.1}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}@{}}
+\toprule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Права директории & Права файла & Создание файла & Удаление файла &
+Запись в файл & Чтение файла & Смена директории & Просмотр файлов в
+директории & Переимено- вание файла & Смена атрибутов файла \\
+d(000) & (000) & - & - & - & - & - & - & - & - \\
+d(000) & (100) & - & - & - & - & - & - & - & - \\
+d(000) & (200) & - & - & - & - & - & - & - & - \\
+d(000) & (300) & - & - & - & - & - & - & - & - \\
+d(000) & (400) & - & - & - & - & - & - & - & - \\
+d(000) & (500) & - & - & - & - & - & - & - & - \\
+d(000) & (600) & - & - & - & - & - & - & - & - \\
+d(000) & (700) & - & - & - & - & - & - & - & - \\
+d(100) & (000) & - & - & - & - & + & - & - & + \\
+d(100) & (100) & - & - & - & - & + & - & - & + \\
+d(100) & (200) & - & - & + & - & + & - & - & + \\
+d(100) & (300) & - & - & + & - & + & - & - & + \\
+d(100) & (400) & - & - & - & + & + & - & - & + \\
+d(100) & (500) & - & - & - & + & + & - & - & + \\
+d(100) & (600) & - & - & + & + & + & - & - & + \\
+d(100) & (700) & - & - & + & + & + & - & - & + \\
+d(200) & (000) & - & - & - & - & - & - & - & - \\
+d(200) & (100) & - & - & - & - & - & - & - & - \\
+d(200) & (200) & - & - & - & - & - & - & - & - \\
+d(200) & (300) & - & - & - & - & - & - & - & - \\
+d(200) & (400) & - & - & - & - & - & - & - & - \\
+d(200) & (500) & - & - & - & - & - & - & - & - \\
+d(200) & (600) & - & - & - & - & - & - & - & - \\
+d(200) & (700) & - & - & - & - & - & - & - & - \\
+d(300) & (000) & + & + & - & - & + & - & + & + \\
+d(300) & (100) & + & + & - & - & + & - & + & + \\
+d(300) & (200) & + & + & + & - & + & - & + & + \\
+d(300) & (300) & + & + & + & - & + & - & + & + \\
+d(300) & (400) & + & + & - & + & + & - & + & + \\
+d(300) & (500) & + & + & - & + & + & - & + & + \\
+d(300) & (600) & + & + & + & + & + & - & + & + \\
+d(300) & (700) & + & + & + & + & + & - & + & + \\
+d(400) & (000) & - & - & - & - & - & + & - & - \\
+d(400) & (100) & - & - & - & - & - & + & - & - \\
+d(400) & (200) & - & - & - & - & - & + & - & - \\
+d(400) & (300) & - & - & - & - & - & + & - & - \\
+d(400) & (400) & - & - & - & - & - & + & - & - \\
+d(400) & (500) & - & - & - & - & - & + & - & - \\
+d(400) & (600) & - & - & - & - & - & + & - & - \\
+d(400) & (700) & - & - & - & - & - & + & - & - \\
+d(500) & (000) & - & - & - & - & + & + & - & + \\
+d(500) & (100) & - & - & - & - & + & + & - & + \\
+d(500) & (200) & - & - & + & - & + & + & - & + \\
+d(500) & (300) & - & - & + & - & + & + & - & + \\
+d(500) & (400) & - & - & - & + & + & + & - & + \\
+d(500) & (500) & - & - & - & + & + & + & - & + \\
+d(500) & (600) & - & - & + & + & + & + & - & + \\
+d(500) & (700) & - & - & + & + & + & + & - & + \\
+d(600) & (000) & - & - & - & - & - & + & - & - \\
+d(600) & (100) & - & - & - & - & - & + & - & - \\
+d(600) & (200) & - & - & - & - & - & + & - & - \\
+d(600) & (300) & - & - & - & - & - & + & - & - \\
+d(600) & (400) & - & - & - & - & - & + & - & - \\
+d(600) & (500) & - & - & - & - & - & + & - & - \\
+d(600) & (600) & - & - & - & - & - & + & - & - \\
+d(600) & (700) & - & - & - & - & - & + & - & - \\
+d(700) & (000) & + & + & - & - & + & + & + & + \\
+d(700) & (100) & + & + & - & - & + & + & + & + \\
+d(700) & (200) & + & + & + & - & + & + & + & + \\
+d(700) & (300) & + & + & + & - & + & + & + & + \\
+d(700) & (400) & + & + & - & + & + & + & + & + \\
+d(700) & (500) & + & + & - & + & + & + & + & + \\
+d(700) & (600) & + & + & + & + & + & + & + & + \\
+d(700) & (700) & + & + & + & + & + & + & + & + \\
+\end{longtable}
+
+Таблица 2.1 «Установленные права и разрешённые действия»
+
+Пример заполнения таблицы 2.1 (рис. 15).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{image/15.PNG}
+
+}
+
+\caption{Изменение прав директории и файла}
+
+\end{figure}%
+
+\section{Заполнение таблицы
+2.2}\label{ux437ux430ux43fux43eux43bux43dux435ux43dux438ux435-ux442ux430ux431ux43bux438ux446ux44b-2.2}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Операция & & Минимальные права на директорию & & Минимальные права на
+файл \\
+Создание файла & & d(300) & & - \\
+Удаление файла & & d(300) & & - \\
+Чтение файла & & d(100) & & (400) \\
+Запись в файл & & d(100) & & (200) \\
+Переименование файла & & d(300) & & (000) \\
+Создание поддиректории & & d(300) & & - \\
+Удаление поддиректории & & d(300) & & - \\
+\end{longtable}
+
+Таблица 2.2 \enquote{Минимальные права для совершения операций}
+
+\chapter{Выводы}\label{ux432ux44bux432ux43eux434ux44b}
+
+Были получены практические навыки работы в консоли с атрибутами файлов,
+закреплены теоретические основы дискреционного разграничения доступа в
+современных системах с открытым кодом на базе ОС Linux.
+
+\chapter{Список
+литературы}\label{ux441ux43fux438ux441ux43eux43a-ux43bux438ux442ux435ux440ux430ux442ux443ux440ux44b}
+
+{[}1{]} Операционные системы:
+https://blog.skillfactory.ru/glossary/operaczionnaya-sistema/
+
+
+\printbibliography
+
+
+
+\end{document}
